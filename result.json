@@ -1,0 +1,48 @@
+{
+ "children": [
+  {
+   "children": [
+    {
+     "name": "01_here's_ranma.mkv",
+     "path": "./src/test-dir/SERIES\\Ramna\\01_here's_ranma.mkv",
+     "type": "episode"
+    },
+    {
+     "name": "02_school_is_no_place_for_horsing_around.mkv",
+     "path": "./src/test-dir/SERIES\\Ramna\\02_school_is_no_place_for_horsing_around.mkv",
+     "type": "episode"
+    },
+    {
+     "name": "03_a_sudden_storm_of_love.mkv",
+     "path": "./src/test-dir/SERIES\\Ramna\\03_a_sudden_storm_of_love.mkv",
+     "type": "episode"
+    },
+    {
+     "name": "target.json",
+     "path": "./src/test-dir/SERIES\\Ramna\\target.json",
+     "type": "episode"
+    }
+   ],
+   "name": "Ramna",
+   "path": "./src/test-dir/SERIES\\Ramna"
+  },
+  {
+   "children": [
+    {
+     "name": "01_good_night.mkv",
+     "path": "./src/test-dir/SERIES\\Something Else\\01_good_night.mkv",
+     "type": "episode"
+    },
+    {
+     "name": "target.json",
+     "path": "./src/test-dir/SERIES\\Something Else\\target.json",
+     "type": "episode"
+    }
+   ],
+   "name": "Something Else",
+   "path": "./src/test-dir/SERIES\\Something Else"
+  }
+ ],
+ "name": "SERIES",
+ "path": "./src/test-dir/SERIES"
+}
