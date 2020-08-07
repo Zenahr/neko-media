@@ -1,0 +1,18 @@
+{
+    "title": "Ranma",
+    "thumbnail-path": "D:/Open-Source/Neko Media/src/test-dir/SERIES/Ramna/thumb.png",
+    "episodes": {
+        "01": {
+            "title": "Here's Ranma",
+            "file-path": "D:/Open-Source/Neko Media/src/test-dir/SERIES/Ramna/01_here's_ranma.mkv"
+        },
+        "02": {
+            "title": "School is no place for horsing around",
+            "file-path": "D:/Open-Source/Neko Media/src/test-dir/SERIES/Ramna/02_school_is_no_place_for_horsing_around.mkv"
+        },
+        "03": {
+            "title": "A sudden storm of love",
+            "file-path": "D:/Open-Source/Neko Media/src/test-dir/SERIES/Ramna/03_a_sudden_storm_of_love.mkv"
+        }
+    }
+}
