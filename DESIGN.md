@@ -13,5 +13,3 @@ So we have following Views:
 - Media View (General View showing all available Media (Series, Movies etc.))
 - Series View (Showing all Seasons)
 - Season View (Showing all Episodes)
-
-- 
