@@ -1,28 +1,26 @@
 from jinja2 import Environment, FileSystemLoader
 from json import load
 import json
-
-template_env = Environment(loader=FileSystemLoader(searchpath='./template'))
+import os
+cwd = os.getcwd()
+template_env = Environment(loader=FileSystemLoader(searchpath='D:/Open-Source/Neko Media/src/frontend/template/'))
 template = template_env.get_template('template.html')
 
-with open('template/config.json', 'r') as config_file:
-    config = json.load(config_file)
+def get_data():
+    with open('D:/Open-Source/Neko Media/src/frontend/template/mock.json', 'r') as data_file:
+        return json.load(data_file)
 
-with open('public/index.html', 'w') as output_file:
-    output_file.write(
-        template.render(
-            title=config['content']['title'],
-            greetingText=config['content']['greetingText'],
-            resumeText=config['content']['resumeText'],
-            firstName=config['content']['firstName'],
-            lastName=config['content']['lastName'],
-            github=config['socials']['github'],
-            linkedIn=config['socials']['linkedIn'],
-            email=config['socials']['email'],
-            socialIntroText=config['content']['socialIntroText'],
-            closingStatement=config['content']['closingStatement'],
-            js=""
+def generate():
+    data = get_data()
+    with open('D:/Open-Source/Neko Media/src/frontend/public/index.html', 'w') as output_file:
+        output_file.write(
+            template.render(
+                title=data['title'],
+                thumbnail='file:///' + data['thumbnail_path'],
+                episodes=data['episodes'],
+            )
         )
-    )
 
-file:///
+generate()
+
+# file:///

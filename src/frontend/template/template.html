@@ -1,0 +1,5 @@
+<h1>{{ title }}</h1>
+
+<img src="{{ thumbnail }}" alt=""> {% if episodes %} {% for episode in episodes: %}
+<p>Episode {{ episode }}</p>
+{% endfor %} {% endif %}
