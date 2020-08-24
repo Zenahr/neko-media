@@ -26,6 +26,11 @@ def series_overview():
 def get_index_json():
    return Response(dumps(collection.find()), mimetype='application/json')
 
+@app.route('/<anime>/.json')
+def get_seasons_json(anime):
+   return Response(dumps(collection.find({"anime": anime})), mimetype='application/json')
+
+
 @app.route('/stats.json')
 def get_stats_json():
    return Response(dumps({
@@ -64,6 +69,8 @@ def add_item():
 @app.route('/api/v1/anime', methods=['GET'])
 def items():
     return Response(dumps(collection.find({"anime": "Ranma"})), mimetype='application/json')
+
+
 
 @app.route('/api/v1/anime/<anime_id>', methods=['GET', 'DELETE'])
 def item(item_id):
