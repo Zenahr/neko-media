@@ -6,6 +6,7 @@ from bson.json_util import dumps
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+import json
 
 app = Flask(__name__)
 client = MongoClient()
@@ -22,7 +23,7 @@ def series_overview():
 
 @app.route('/.json')
 def get_index_json():
-   return Response(dumps(collection.distinct("anime")), mimetype='application/json')
+   return Response(dumps(collection.find()), mimetype='application/json')
 
 @app.route('/stats.json')
 def get_stats_json():

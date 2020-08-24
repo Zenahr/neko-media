@@ -4,11 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Neko Media | Main View</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <style>
+        * {
+            cursor: default;
+        }
+        
+        body {
+            background-color: #3b3b3b;
+        }
+        
+        .card-content p {
+            color: white;
+        }
+        
+        .card-title {
+            color: white;
+            user-select: none;
+        }
+    </style>
 </head>
 
 <body>
-    {% for name in series %} {{name}} {% endfor %}
+    <div class="row">
+        {% for entry in series %}
+
+        <div class="col s12 m2">
+            <div class="card">
+                <a href="Seasons.html">
+                    <div class="card-image">
+                        <img src="static/{{ entry }}.jpg">
+                    </div>
+                    <div class="card-content teal">
+                        <span class="card-title">{{ entry }}</span>
+                        <!-- <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p> -->
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>
