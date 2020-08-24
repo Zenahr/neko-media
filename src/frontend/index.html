@@ -30,6 +30,7 @@
 
 <body>
 
+
     <div class="row">
         <div class="col s12 m2">
             <div class="card">
@@ -49,6 +50,25 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var sideNav = document.querySelector('.sidenav');
+            let options = {}
+            var instances = M.Sidenav.init(sideNav, options);
+
+        });
+
+        // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
+        // var collapsibleElem = document.querySelector('.collapsible');
+        // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
+
+        // Or with jQuery
+
+        $(document).ready(function() {
+            $('.sidenav').sidenav();
+        });
+    </script>
 </body>
 
 </html>

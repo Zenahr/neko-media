@@ -78,10 +78,13 @@
 
     <script>
         function copyFileLink() {
-            let copyText = "TEXT"
+            let copyText = "D:/Open-Source/Neko Media/src/test-dir/SERIES/Ramna/01_here's_ranma.mkv"
             navigator.clipboard.writeText(copyText)
             document.execCommand("copy");
-            alert("Copied the text: " + copyText);
+            M.toast({
+                html: 'File link copied. Paste into File Explorer to open media file',
+                classes: 'rounded blue'
+            })
         }
     </script>
 </body>
