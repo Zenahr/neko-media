@@ -30,6 +30,11 @@ def get_index_json():
 def get_seasons_json(anime):
    return Response(dumps(collection.find({"anime": anime})), mimetype='application/json')
 
+@app.route('/<anime>')
+def get_seasons(anime):
+    data = collection.find({"anime": anime})
+    return render_template("seasons_overview.html", data=data)
+
 
 @app.route('/stats.json')
 def get_stats_json():

@@ -30,17 +30,16 @@
 
 <body>
     <div class="row">
-        {% for entry in series %}
-
+        {% for entry in data %}
         <div class="col s12 m2">
             <div class="card">
-                <a href="/{{ entry.anime }}">
+                <a href="#" onclick="copyFileLink()">
                     <div class="card-image">
-                        <img src="static/{{ entry.anime }}.jpg">
+                        <img src="{{ entry.anime }}.jpg">
                     </div>
                     <div class="card-content teal">
-                        <span class="card-title">{{ entry.anime }}</span>
-                        <!-- <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p> -->
+                        <span class="card-title">SEASON {{ entry.season }}</span>
+                        <!-- <p>EPISODE {{ entry.episode }}</p> -->
                     </div>
                 </a>
             </div>
@@ -50,6 +49,18 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        function copyFileLink() {
+            let copyText = "D:/Open-Source/Neko Media/src/test-dir/SERIES/Ramna/01_here's_ranma.mkv"
+            navigator.clipboard.writeText(copyText)
+            document.execCommand("copy");
+            M.toast({
+                html: 'File link copied. Paste into File Explorer to open media file',
+                classes: 'rounded blue'
+            })
+        }
+    </script>
 </body>
 
 </html>
