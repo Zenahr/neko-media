@@ -7,17 +7,10 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 
-
 app = Flask(__name__)
 client = MongoClient()
 db = client.nekomedia
 collection = db.anime
-
-# collection.create_index([
-#     ("anime", pymongo.ASCENDING),
-#     ("episode", pymongo.ASCENDING),
-#     ("season", pymongo.ASCENDING),
-# ], unique=True)
 
 sorted(list(collection.index_information()))
 
@@ -25,12 +18,18 @@ sorted(list(collection.index_information()))
 def series_overview():
 #    data = Response(dumps(collection.find({}, {"_id":0, "anime":1})), mimetype='application/json')
    series = collection.distinct("anime")
-   return render_template("series_overview", series=series)
+   return render_template("series_overview.html", series=series)
 
 @app.route('/.json')
-def get():
+def get_index_json():
    return Response(dumps(collection.distinct("anime")), mimetype='application/json')
 
+@app.route('/stats.json')
+def get_stats_json():
+   return Response(dumps({
+       "series_count":collection.count(),
+       "episodes_count":collection.find({}, {"episode":1}).count(),
+       }), mimetype='application/json')
 
 @app.route('/api/v1/series/add', methods=['POST'])
 def add_item():
