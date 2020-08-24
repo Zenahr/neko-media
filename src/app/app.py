@@ -18,7 +18,8 @@ sorted(list(collection.index_information()))
 @app.route('/')
 def series_overview():
 #    data = Response(dumps(collection.find({}, {"_id":0, "anime":1})), mimetype='application/json')
-   series = collection.distinct("anime")
+#    series = collection.distinct("anime")
+   series = collection.find()
    return render_template("series_overview.html", series=series)
 
 @app.route('/.json')
