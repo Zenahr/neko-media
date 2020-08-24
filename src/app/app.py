@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, render_template
 import pymongo
 from pymongo import MongoClient
 from flask_pymongo import PyMongo
@@ -6,6 +6,7 @@ from bson.json_util import dumps
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+
 
 app = Flask(__name__)
 client = MongoClient()
@@ -23,8 +24,13 @@ sorted(list(collection.index_information()))
 @app.route('/')
 def series_overview():
 #    data = Response(dumps(collection.find({}, {"_id":0, "anime":1})), mimetype='application/json')
-   data = Response(dumps(collection.distinct("anime")), mimetype='application/json')
-   return data
+   series = collection.distinct("anime")
+   return render_template("series_overview", series=series)
+
+@app.route('/.json')
+def get():
+   return Response(dumps(collection.distinct("anime")), mimetype='application/json')
+
 
 @app.route('/api/v1/series/add', methods=['POST'])
 def add_item():
