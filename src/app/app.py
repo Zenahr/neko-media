@@ -11,9 +11,11 @@ import json
 app = Flask(__name__)
 client = MongoClient()
 db = client.nekomedia
-collection = db.anime
+series = db.Series
+seasons = db.Season
+episodes = db.Episode
 
-sorted(list(collection.index_information()))
+# sorted(list(collection.index_information()))
 
 @app.route('/')
 def series_overview():
@@ -23,12 +25,20 @@ def series_overview():
    return render_template("series_overview.html", series=series)
 
 @app.route('/.json')
-def get_index_json():
-   return Response(dumps(collection.find()), mimetype='application/json')
+def get_series_json():
+   return Response(dumps(series.find()), mimetype='application/json')
 
-@app.route('/<anime>/.json')
-def get_seasons_json(anime):
-   return Response(dumps(collection.find({"anime": anime})), mimetype='application/json')
+@app.route('/seasons.json')
+def get_seasons_json():
+   return Response(dumps(seasons.find()), mimetype='application/json')
+
+@app.route('/episodes.json')
+def get_episodes_json():
+   return Response(dumps(episodes.find()), mimetype='application/json')
+
+# @app.route('/<anime>/.json')
+# def get_seasons_json(anime):
+#    return Response(dumps(collection.find({"anime": anime})), mimetype='application/json')
 
 @app.route('/<anime>')
 def get_seasons(anime):
@@ -47,8 +57,9 @@ def get_season(anime, season):
 @app.route('/stats.json')
 def get_stats_json():
    return Response(dumps({
-       "series_count":collection.count(),
-       "episodes_count":collection.find({}, {"episode":1}).count(),
+       "series_count":series.count(),
+       "seasons_count":seasons.count(),
+       "episodes_count":episodes.count(),
        }), mimetype='application/json')
 
 @app.route('/api/v1/series/add', methods=['POST'])
