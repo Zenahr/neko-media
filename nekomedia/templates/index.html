@@ -7,7 +7,7 @@
   <div class="container my-12 mx-auto px-4 md:px-12">
     <div class="flex flex-wrap justify-center -mx-1 lg:-mx-4">
       {% for c in categories %}
-      {{category_card(c.name, url_for('static', filename='default.jpg'), 'test')}}
+      {{category_card(c.name, url_for('static', filename='default.jpg'), 'test', c.path)}}
       {% endfor %}
     </div>
 </div>

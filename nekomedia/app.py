@@ -1,7 +1,8 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 import sys
 from slugify import slugify
 from data import FOLDERS
+import subprocess
 
 app = Flask(__name__)
 
@@ -10,8 +11,14 @@ def _slugify(text):
     return slugify(text)
 
 @app.route('/')
-def hello():
+def index():
     return render_template('index.html', categories=FOLDERS)
+
+@app.route('/open_media_folder')
+def open_media_folder():
+    path = request.args.get('path')
+    subprocess.run(['explorer.exe', path])
+    return redirect(url_for('index'))
 
 @app.route('/category/<category_slug>')
 def articles(category_slug):

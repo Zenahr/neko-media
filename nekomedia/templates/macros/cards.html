@@ -1,7 +1,9 @@
 {% macro category_card(category_title, category_image, category_endpoint, folderpath) %}
-<form action="/open_media_folder">
 <div class="my-1 px-1 w-full md:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 md:w-1 sm:w-1/2 transform transition duration-500 hover:scale-110">
-    <a href="/category/{{ category_endpoint }}">
+    <form action="/open_media_folder?path={{folderpath}}" method="GET">
+    <a href="/open_media_folder?path={{folderpath}}">
+    <!-- <a href="/category/{{ category_endpoint }}"> -->
+        <button  type="submit"></button>
     <article class="overflow-hidden rounded-lg shadow-lg">
             <img alt="" class="block h-auto w-full" src="{{ url_for('static', filename=category_image) }}"> 
             <header class="flex items-center justify-between leading-tight p-4 md:p-8">
@@ -25,8 +27,8 @@
                 </a> -->
             </footer>
         </article>
+    </form>
     </div>
-</form>
 {% endmacro %}
     
     {% macro article_card(title, image, article_endpoint) %}
