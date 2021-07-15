@@ -2,6 +2,8 @@ import os, re
 from slugify import slugify
 from dotenv import load_dotenv
 import fnmatch
+import time
+import cv2
 
 load_dotenv()
 
@@ -29,6 +31,49 @@ def get_folders():
             folders.append(dict(name=re.sub("[\(\[].*?[\)\]]", "", f.name).strip(), path=f.path, episodes=get_media_files_count(f), stats=f.stat))
     return folders
 
+def generate_preview_thumb(video_files_directory, output_loc='./static/thumbs'):
+    # TODO: don't use filename but rather directory name. Makes it easier to create url_for() references to the file for every series.
+    """Function to extract frames from input video file
+    and save them as separate frames in an output directory.
+    Args:
+        input_loc: Input video file.
+        output_loc: Output directory to save the frames.
+    Returns:
+        None
+    """
+    video_file_name = None
+    for entry in os.listdir(video_files_directory):
+        if (entry).endswith(('.mkv', '.mp4')):
+            video_file_name = entry
+            break
+    file = os.path.join(video_files_directory, video_file_name)
+
+    try:
+        os.mkdir(output_loc)
+    except OSError:
+        pass
+    # Log the time
+    time_start = time.time()
+    # Start capturing the feed
+    cap = cv2.VideoCapture(file)
+    # Find the number of frames
+    video_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
+    print ("Number of frames: ", video_length)
+    count = 0
+    print ("Converting video..\n")
+    # Start converting the video
+    while cap.isOpened():
+        # Extract the frame
+        ret, frame = cap.read()
+        cv2.imwrite(output_loc + f"/{video_file_name}.jpg", frame)
+        break # we only need ONE image per video for our preview.
+        count = count + 1
+        if (count > (video_length-1)):
+            time_end = time.time()
+            cap.release()
+            print ("Done extracting frames.\n%d frames extracted" % count)
+            print ("It took %d seconds forconversion." % (time_end-time_start))
+            break
 
 
     # first_level_folder_names = [ re.sub("[\(\[].*?[\)\]]", "", name).strip() for name in os.listdir(os.getenv('MEDIA_PATH')) if os.path.isdir(os.path.join(os.getenv('MEDIA_PATH'), name)) ]
@@ -53,6 +98,9 @@ def get_folders():
 FOLDERS = get_folders()
 
 if __name__ == '__main__':
+
+    generate_preview_thumb('D:\BakaBT\ANIME\Sora yori mo Tooi Basho [BD]', './nekomedia/static/thumbs')
+
     FOLDERS = get_folders()
     for f in FOLDERS:
         print(f)
