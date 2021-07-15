@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% from '/macros/cards.html' import category_card %}
+{% from '/macros/social_media_icon.html' import SMS %}
+
+{% block main %}
+{% include 'partials/header.html' %}
+  <div class="container my-12 mx-auto px-4 md:px-12">
+    <div class="flex flex-wrap justify-center -mx-1 lg:-mx-4">
+      {% for c in categories %}
+      {{category_card(c.title, c.image, c.slug)}}
+      {% endfor %}
+    </div>
+</div>
+
+
+{% endblock main %}

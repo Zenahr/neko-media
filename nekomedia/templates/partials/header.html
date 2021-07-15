@@ -1,0 +1,15 @@
+{% block header %}
+<div class="text-center max-w-2xl mx-auto pt-4">
+  <a href="/">
+    <h1 class="text-1xl md:text-4xl font-medium mb-2 font-family-raleway">Professional Portfolio</h1>
+    <div class="w-full flex justify-center md:justify-center pb-4">
+      <img style="height: 100px; width:auto" src="https://media-exp3.licdn.com/dms/image/C4D03AQEhKaUcI1WGqw/profile-displayphoto-shrink_200_200/0/1599413027560?e=1630540800&v=beta&t=c3tf932OllLuVlAYtBXrGSJmtOcclLNzuWH2i6fVTOY" class="rounded-full shadow h-32 w-32">
+  </div>
+  </a>
+  <div class="flex sm:justify-center">
+    {{SMS('/', 'linkedin')}}
+  {{SMS('/', 'github')}}
+  {{SMS('/', 'youtube')}}
+      </div>
+</div>
+{% endblock header %}

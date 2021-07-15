@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% from '/macros/cards.html' import category_card %}
+{% from '/macros/cards.html' import article_card %}
+{% from '/macros/social_media_icon.html' import SMS %}
+
+{% block main %}
+{% include 'partials/header.html' %}
+<div class="select-none container my-12 mx-auto px-4 md:px-12">
+    {% for article in articles %}
+    {{article_card(article.metadata['title'], article.metadata['thumb'], article.metadata['slug'])}}
+    {% endfor %}
+</div>
+    {% endblock main %}
