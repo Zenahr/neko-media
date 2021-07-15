@@ -10,6 +10,8 @@ load_dotenv()
 FOLDERS=[]
 
 def get_media_files_count(dir_entry):
+    """Get amount of episodes.
+    """
     count = 0
     for entry in os.listdir(dir_entry):
         if (entry).endswith(('.mkv', '.mp4')):
@@ -24,7 +26,6 @@ def get_folders():
         episodes_count
     }
     """
-
     folders = []
     for f in os.scandir(os.getenv('MEDIA_PATH')):
         if f.is_dir():
@@ -32,15 +33,7 @@ def get_folders():
     return folders
 
 def generate_preview_thumb(video_files_directory, output_loc='./static/thumbs'):
-    # TODO: don't use filename but rather directory name. Makes it easier to create url_for() references to the file for every series.
-    """Function to extract frames from input video file
-    and save them as separate frames in an output directory.
-    Args:
-        input_loc: Input video file.
-        output_loc: Output directory to save the frames.
-    Returns:
-        None
-    """
+    # TODO: don't use filename but rather directory name. Makes it easier to create url_for() references to thumbnails later on.
     video_file_name = None
     for entry in os.listdir(video_files_directory):
         if (entry).endswith(('.mkv', '.mp4')):
