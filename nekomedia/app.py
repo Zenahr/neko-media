@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for
 import sys
-from flask_frozen import Freezer
 from slugify import slugify
+from data import FOLDERS
 
 app = Flask(__name__)
 
@@ -11,7 +11,7 @@ def _slugify(text):
 
 @app.route('/')
 def hello():
-    return render_template('index.html', categories=[])
+    return render_template('index.html', categories=FOLDERS)
 
 @app.route('/category/<category_slug>')
 def articles(category_slug):
