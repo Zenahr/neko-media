@@ -1,10 +1,12 @@
 from flask import Flask, render_template, redirect, url_for, request
 import sys
 from slugify import slugify
-from data import FOLDERS
+from data import get_all_folders
 import subprocess
 
 app = Flask(__name__)
+
+FOLDERS = get_all_folders()
 
 @app.template_filter()
 def _slugify(text):
@@ -16,7 +18,7 @@ def index():
 
 @app.route('/open_media_folder')
 def open_media_folder():
-    path = request.args.get('path')
+    path = request.args.get('path').replace('%20', ' ')
     subprocess.run(['explorer.exe', path])
     return redirect(url_for('index'))
 

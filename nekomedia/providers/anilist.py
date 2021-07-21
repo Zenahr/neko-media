@@ -24,7 +24,10 @@ def get_anime_info(anime_name):
   }
   '''
   response = requests.post(url, json={'query': search_anime_by_name, 'variables': variables}).json()['data']
-  if not response['Media']:
+  try:
+    if not response['Media']:
+      return dict(result='Not Found.')
+  except TypeError:
     return dict(result='Not Found.')
   return dict(info=response, thumb=response['Media']['coverImage']['large'])
 

@@ -11,6 +11,7 @@ from providers.anilist import get_anime_info
 load_dotenv()
 import os.path
 import urllib.request
+import json
 
 FOLDERS=[]
 
@@ -23,7 +24,7 @@ def get_media_files_count(dir_entry):
             count += 1
     return count
 
-def get_folders():
+def get_folders(base_folder=os.getenv('MEDIA_PATH')):
     """
     {
         name
@@ -32,7 +33,8 @@ def get_folders():
     }
     """
     folders = []
-    for f in os.scandir(os.getenv('MEDIA_PATH')):
+    for f in os.scandir(base_folder):
+        print('added', len(folders), 'anime')
         if f.is_dir():
             name = re.sub("[\(\[].*?[\)\]]", "", f.name).strip()
             info = get_anime_info(name)
@@ -51,6 +53,27 @@ def get_folders():
                     )
                 )
     return folders
+
+def flatten(t):
+    # https://stackoverflow.com/a/952952/12675239
+    return [item for sublist in t for item in sublist]
+
+def get_all_folders():
+    """infinitely recursive version of get_folders()"""
+    result = []
+    for root, dirs, files in os.walk(os.getenv('MEDIA_PATH')):
+        for filename in files:
+            # print(os.path.join(root, filename))
+            pass
+        for dirname in dirs:
+            # print(os.path.join(root, dirname))
+            print(f'scanning dir: {dirname}')
+            temp = get_folders(os.path.join(root, dirname))
+            if not temp == []:
+                result.append(temp)
+            print('RESULT ---------------------------------------------')
+            print(result)
+    return flatten(result)
 
 def serve_thumb(name):
     # SCRAPPED BECAUSE 403. USE URI'S DIRECTLY INSTEAD.
@@ -113,8 +136,6 @@ def generate_preview_thumb(video_files_directory, output_loc='./static/thumbs'):
                     # metadata['slug'] = slugify(metadata['title'])
                     # if metadata['publish']:
                         # videos.append(Article(metadata, markup))
-
-FOLDERS = get_folders() # TODO: UNCOMMENT THIS IN PRODUCTION
 
 if __name__ == '__main__':
     pass
