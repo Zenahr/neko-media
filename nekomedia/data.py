@@ -35,20 +35,35 @@ def get_folders():
             name = re.sub("[\(\[].*?[\)\]]", "", f.name).strip()
             info = get_anime_info(name)
             thumb = ''
-            try:
-                thumb = info['thumb']
-            except KeyError:
-                continue
             folders.append(dict(
                 name=name,
                 path=f.path,
                 episodes=get_media_files_count(f),
                 stats=f.stat,
-                thumb=thumb,
+                thumb=serve_thumb(name),
                 info=info
                     )
                 )
+
+                check if image exists for 
+                save image on disk in static folder.
+
+
+            save_thumb_on_disk()
     return folders
+
+def serve_thumb(name):
+    '''
+    look for image on disk first.
+    /static/thumbs/anime name.png
+    if you can't find a thumb, fetch the thumb, save it and return the path.
+    otherwise just return the path to /static/thumbs/anime name.png
+
+
+    '''
+
+def save_thumb_on_disk():
+    pass
 
 def generate_preview_thumb(video_files_directory, output_loc='./static/thumbs'):
     """"Credit: https://stackoverflow.com/a/49011190/12675239"""

@@ -55,3 +55,12 @@ if __name__ == '__main__':
 
   for name in names:
     print(get_anime_info(name))
+
+'''
+{'info': 
+{'Media': 
+    {'id': 119675, 'coverImage': 
+    {'large': 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx119675-ziQ6Lb80zEx4.png'},
+    'title': 
+    {'english': 'SHAMAN KING (2021)', 'romaji': 'SHAMAN KING (2021)', 'native': 'SHAMAN KING (2021)'}}}, 'thumb': 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx119675-ziQ6Lb80zEx4.png'}
+'''
