@@ -6,7 +6,7 @@ import time
 import cv2
 import inspect
 import sys
-sys.path.insert(1, os.path.join(sys.path[0], '..')) # adds support for importing scripts from inside a parent folder.
+sys.path.insert(1, os.path.join(sys.path[0], '..')) # https://stackoverflow.com/a/11158224/12675239 Adds support for importing scripts from inside a parent folder. PYTHONPATH env var.
 from providers.anilist import get_anime_info
 load_dotenv()
 
@@ -32,7 +32,22 @@ def get_folders():
     folders = []
     for f in os.scandir(os.getenv('MEDIA_PATH')):
         if f.is_dir():
-            folders.append(dict(name=re.sub("[\(\[].*?[\)\]]", "", f.name).strip(), path=f.path, episodes=get_media_files_count(f), stats=f.stat))
+            name = re.sub("[\(\[].*?[\)\]]", "", f.name).strip()
+            info = get_anime_info(name)
+            thumb = ''
+            try:
+                thumb = info['thumb']
+            except KeyError:
+                continue
+            folders.append(dict(
+                name=name,
+                path=f.path,
+                episodes=get_media_files_count(f),
+                stats=f.stat,
+                thumb=thumb,
+                info=info
+                    )
+                )
     return folders
 
 def generate_preview_thumb(video_files_directory, output_loc='./static/thumbs'):
@@ -79,8 +94,8 @@ FOLDERS = get_folders()
 
 if __name__ == '__main__':
 
-    generate_preview_thumb(os.getenv('EXAMPLE_VIDEO_FOLDER_PATH'), './nekomedia/static/thumbs')
+    # generate_preview_thumb(os.getenv('EXAMPLE_VIDEO_FOLDER_PATH'), './nekomedia/static/thumbs')
 
-    # FOLDERS = get_folders()
-    # for f in FOLDERS:
-        # print(f)
+    FOLDERS = get_folders()
+    for f in FOLDERS:
+        print(f['name'])
