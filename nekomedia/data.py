@@ -14,6 +14,14 @@ import urllib.request
 import json
 import pickle
 
+def flatten(input):
+    """flatten recursively. https://www.geeksforgeeks.org/python-program-to-flatten-a-nested-list-using-recursion/"""
+    if not(bool(input)):
+        return input
+    if isinstance(input[0], list):
+        return flatten(*input[:1]) + flatten(input[1:])
+    return input[:1] + flatten(input[1:])
+
 def get_media_files_count(dir_entry):
     """Get amount of episodes.
     """
@@ -46,23 +54,21 @@ def get_folders(base_folder=os.getenv('MEDIA_PATH')):
                 name=name,
                 path=f.path,
                 episodes=get_media_files_count(f),
-                stats=f.stat,
+                # stats=f.stat,
                 thumb=info['thumb'],
                 info=info['info']
                     )
                 )
-    return folders
-
-def flatten(t):
-    # https://stackoverflow.com/a/952952/12675239
-    return [item for sublist in t for item in sublist]
+    return flatten(folders)
 
 def get_all_folders():
-    result = []
+    """infinitely recursive version of get_folders()"""
     try:
-        return pickle.load(open("data.p", "rb"))
-    except Exception:
-        """infinitely recursive version of get_folders()"""
+        if pickle.load(open("data.p", "rb")):
+                return pickle.load(open("data.p", "rb"))
+    except EOFError:
+        print('corrupted data or never cached before.')
+        result = []
         for root, dirs, files in os.walk(os.getenv('MEDIA_PATH')):
             for filename in files:
                 # print(os.path.join(root, filename))
@@ -75,8 +81,8 @@ def get_all_folders():
                     result.append(temp)
                 print('RESULT ---------------------------------------------')
                 print(result)
-        pickle.dump(result, open( "data.p", "wb" ) )
-        return flatten(result)
+    pickle.dump(flatten(result), open( "data.p", "wb" ) )
+    return flatten(result)
 
 def serve_thumb(name):
     # SCRAPPED BECAUSE 403. USE URI'S DIRECTLY INSTEAD.
@@ -147,3 +153,5 @@ if __name__ == '__main__':
     # FOLDERS = get_folders()
     # for f in FOLDERS:
     #     print(f['name'])
+
+    # print(flatten(get_folders()))
