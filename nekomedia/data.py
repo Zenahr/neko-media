@@ -4,7 +4,10 @@ from dotenv import load_dotenv
 import fnmatch
 import time
 import cv2
-
+import inspect
+import sys
+sys.path.insert(1, os.path.join(sys.path[0], '..')) # adds support for importing scripts from inside a parent folder.
+from providers.anilist import get_anime_info
 load_dotenv()
 
 FOLDERS=[]
@@ -48,7 +51,9 @@ def generate_preview_thumb(video_files_directory, output_loc='./static/thumbs'):
     cap = cv2.VideoCapture(file)
     while cap.isOpened():
         ret, frame = cap.read()
-        cv2.imwrite(output_loc + f"/{video_file_name}.jpg", frame)
+        print(video_files_directory)
+        thumb_name = video_files_directory.rsplit('\\', 1)[-1].strip() # Seperate directory name from parent folder.
+        cv2.imwrite(output_loc + f"/{thumb_name}.jpg", frame)
         break # we only need ONE image per video for our preview.
 
     # first_level_folder_names = [ re.sub("[\(\[].*?[\)\]]", "", name).strip() for name in os.listdir(os.getenv('MEDIA_PATH')) if os.path.isdir(os.path.join(os.getenv('MEDIA_PATH'), name)) ]
@@ -74,8 +79,8 @@ FOLDERS = get_folders()
 
 if __name__ == '__main__':
 
-    generate_preview_thumb('D:\BakaBT\ANIME\Sora yori mo Tooi Basho [BD]', './nekomedia/static/thumbs')
+    generate_preview_thumb(os.getenv('EXAMPLE_VIDEO_FOLDER_PATH'), './nekomedia/static/thumbs')
 
-    FOLDERS = get_folders()
-    for f in FOLDERS:
-        print(f)
+    # FOLDERS = get_folders()
+    # for f in FOLDERS:
+        # print(f)
