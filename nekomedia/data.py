@@ -9,6 +9,8 @@ import sys
 sys.path.insert(1, os.path.join(sys.path[0], '..')) # https://stackoverflow.com/a/11158224/12675239 Adds support for importing scripts from inside a parent folder. PYTHONPATH env var.
 from providers.anilist import get_anime_info
 load_dotenv()
+import os.path
+import urllib.request
 
 FOLDERS=[]
 
@@ -35,35 +37,42 @@ def get_folders():
             name = re.sub("[\(\[].*?[\)\]]", "", f.name).strip()
             info = get_anime_info(name)
             thumb = ''
+            try:
+                thumb = info['thumb']
+            except KeyError:
+                continue
             folders.append(dict(
                 name=name,
                 path=f.path,
                 episodes=get_media_files_count(f),
                 stats=f.stat,
-                thumb=serve_thumb(name),
-                info=info
+                thumb=info['thumb'],
+                info=info['info']
                     )
                 )
-
-                check if image exists for 
-                save image on disk in static folder.
-
-
-            save_thumb_on_disk()
     return folders
 
 def serve_thumb(name):
+    # SCRAPPED BECAUSE 403. USE URI'S DIRECTLY INSTEAD.
     '''
     look for image on disk first.
     /static/thumbs/anime name.png
     if you can't find a thumb, fetch the thumb, save it and return the path.
     otherwise just return the path to /static/thumbs/anime name.png
-
-
     '''
-
-def save_thumb_on_disk():
-    pass
+    img_path = './static/thumbs'
+    fname = os.path.join(img_path, name, '.png')
+    if not os.path.isfile(os.path.join(fname)):
+        try:
+            print(f'downloading thumbnail for {name}')
+            uri = get_anime_info(name)['thumb']
+            urllib.request.urlretrieve(uri, f'{img_path}/{name}.png') # https://stackoverflow.com/a/8286449/12675239
+        except urllib.error.HTTPError:
+            print('probably HTTP Error 403: Forbidden. Sadge.')
+            return ''
+    else:
+        return f'{img_path}/{name}.png'
+        
 
 def generate_preview_thumb(video_files_directory, output_loc='./static/thumbs'):
     """"Credit: https://stackoverflow.com/a/49011190/12675239"""
@@ -105,12 +114,12 @@ def generate_preview_thumb(video_files_directory, output_loc='./static/thumbs'):
                     # if metadata['publish']:
                         # videos.append(Article(metadata, markup))
 
-FOLDERS = get_folders()
+FOLDERS = get_folders() # TODO: UNCOMMENT THIS IN PRODUCTION
 
 if __name__ == '__main__':
-
+    pass
     # generate_preview_thumb(os.getenv('EXAMPLE_VIDEO_FOLDER_PATH'), './nekomedia/static/thumbs')
 
-    FOLDERS = get_folders()
-    for f in FOLDERS:
-        print(f['name'])
+    # FOLDERS = get_folders()
+    # for f in FOLDERS:
+    #     print(f['name'])
