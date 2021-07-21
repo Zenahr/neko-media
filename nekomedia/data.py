@@ -132,20 +132,6 @@ def generate_preview_thumb(video_files_directory, output_loc='./static/thumbs'):
     # print(full_path_to_first_level_folders)
     # return [dict(name=re.sub("[\(\[].*?[\)\]]", "", folder.rsplit('\\', 1)[-1]).strip(), path=folder) for folder in full_path_to_first_level_folders]
 
-# ALTERNATIVE
-
-#  for root, dirs, files in os.walk(directory):
-        # print(root)
-        # for file in files:
-            # if(file.endswith(".mkv")):
-                # f = open(os.path.join(root,file)).read()
-                # metadata, markdown = frontmatter.parse(f)
-                # markup = styleHandler(markdown2.markdown(markdown, extras=['fenced-code-blocks', 'smarty-pants', 'spoiler', 'tables', 'task_list']))
-                # if not len(metadata) == 0: # Check if article has metadata at all. If not, do not proceed.
-                    # metadata['slug'] = slugify(metadata['title'])
-                    # if metadata['publish']:
-                        # videos.append(Article(metadata, markup))
-
 if __name__ == '__main__':
     pass
     # generate_preview_thumb(os.getenv('EXAMPLE_VIDEO_FOLDER_PATH'), './nekomedia/static/thumbs')

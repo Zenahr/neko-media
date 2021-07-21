@@ -1,12 +1,12 @@
 from flask import Flask, render_template, redirect, url_for, request
 import sys
 from slugify import slugify
-from data import get_all_folders, get_folders
+from data import get_all_folders, get_folders, flatten
 import subprocess
 
 app = Flask(__name__)
 
-FOLDERS = get_folders()
+FOLDERS = flatten(get_all_folders())
 
 @app.template_filter()
 def _slugify(text):
