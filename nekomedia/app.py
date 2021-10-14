@@ -18,10 +18,10 @@ def _slugify(text):
 
 @app.route('/')
 def index():
-    try:
-        print('rendering cached version')
-        return render_template('frozen_index.html') # use cached version if available (AniList images saved).
-    except Exception:
+    # try:
+    #     print('rendering cached version')
+    #     return render_template('frozen_index.html') # use cached version if available (AniList images saved).
+    # except Exception:
         print('rendering non-cached version')
         return render_template('index.html', categories=FOLDERS)
 
@@ -52,7 +52,6 @@ def open_media_folder():
 #     return page_not_found(404)
 
 freezer.freeze()
-# move ..\build\index.html to ..\templates\frozen_index.html
 import os
 os.replace("nekomedia/build/index.html", "nekomedia/templates/frozen_index.html")
 
@@ -60,4 +59,4 @@ if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'build':
         freezer.freeze()
     else:
-        app.run(host='192.168.1.63' ,debug=True)
+        app.run(debug=True)
