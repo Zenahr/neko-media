@@ -5,11 +5,13 @@ from data import get_all_folders, get_folders, flatten
 import subprocess
 from flask_frozen import Freezer
 import os.path
+import flaskwebgui
 
 FOLDERS = flatten(get_all_folders())
 
 app = Flask(__name__)
 freezer = Freezer(app, with_no_argument_rules=False, log_url_for=False)
+gui = flaskwebgui.FlaskUI(app)
 
 
 @app.template_filter()
@@ -59,4 +61,5 @@ if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'build':
         freezer.freeze()
     else:
-        app.run(debug=True)
+        gui.run()
+        # app.run(debug=True)
